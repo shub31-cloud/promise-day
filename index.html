@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Promise Day 💖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+  body {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    font-size: 3em;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    animation: glow 2s infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 25px #ff9acd; }
+  }
+
+  .container {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+  }
+
+  #promise-text {
+    font-size: 1.3em;
+    min-height: 70px;
+    margin-top: 15px;
+  }
+
+  button {
+    margin-top: 20px;
+    background: white;
+    color: #ff4081;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #ff4081;
+    color: white;
+    transform: scale(1.1);
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: 0;
+    color: #fff;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+  }
+
+  /* Floating glowing particles */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.8);
+    animation: moveParticle 10s linear infinite;
+  }
+
+  @keyframes moveParticle {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0.7; }
+    100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+  }
+
+  /* Letter popup */
+  .popup {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(255,255,255,0.9);
+    color: #ff4081;
+    width: 300px;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease;
+    z-index: 100;
+  }
+
+  .popup.show {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .popup h2 {
+    margin-bottom: 10px;
+  }
+
+  .popup button {
+    margin-top: 10px;
+    background: #ff4081;
+    color: white;
+  }
+
+  audio {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Happy Promise Day 💞 Bayko</h1>
+<div class="container">
+  <div id="promise-text"></div>
+  <button id="promise-btn">Make a Promise 💌</button>
+  <button id="heart-btn">Open My Heart 💖</button>
+</div>
+
+<!-- Popup letter -->
+<div class="popup" id="love-popup">
+  <h2>My Promise to You 💍</h2>
+  <p>I promise to stand by you in every joy and sorrow,  
+  to hold your hand in every storm,  
+  and to love you more with every heartbeat ❤️</p>
+  <button onclick="closePopup()">Close 💫</button>
+</div>
+
+<!-- Background music -->
+<audio id="bgMusic" src="song.mp3" autoplay loop hidden></audio>
+
+<script>
+const promises = [
+  "I promise to always be there for you 💖",
+  "I promise to make you smile every day 😊",
+  "I promise to love you endlessly 💕",
+  "I promise to protect your heart forever 🔐",
+  "My every heartbeat belongs to you ❤️"
+];
+
+const btn = document.getElementById('promise-btn');
+const text = document.getElementById('promise-text');
+let index = 0;
+
+btn.addEventListener('click', () => {
+  if (index < promises.length) {
+    typePromise(promises[index]);
+    index++;
+  } else {
+    text.innerHTML = "Forever yours, my love 💞";
+  }
+});
+
+function typePromise(str) {
+  text.innerHTML = "";
+  let i = 0;
+  const typing = setInterval(() => {
+    text.innerHTML += str.charAt(i);
+    i++;
+    if (i === str.length) clearInterval(typing);
+  }, 50);
+}
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+  heart.innerHTML = '💖';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 400);
+
+// Floating particles
+function createParticle() {
+  const particle = document.createElement('div');
+  particle.classList.add('particle');
+  particle.style.left = Math.random() * 100 + 'vw';
+  particle.style.width = particle.style.height = Math.random() * 5 + 'px';
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 10000);
+}
+setInterval(createParticle, 300);
+
+// Popup letter
+const popup = document.getElementById('love-popup');
+document.getElementById('heart-btn').addEventListener('click', () => {
+  popup.classList.add('show');
+});
+function closePopup() {
+  popup.classList.remove('show');
+}
+</script>
+<script>
+  document.addEventListener("click", () => {
+    const music = document.getElementById("bgMusic");
+    if (music.paused) {
+      music.play().catch(()=>{});
+    }
+  });
+</script>
+</body>
+</html>
